@@ -1,0 +1,5 @@
+# 本地环境与敏感信息
+.env
+*.local
+local/
+secrets/
