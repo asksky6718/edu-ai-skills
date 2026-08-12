@@ -9,6 +9,11 @@
 | Skill | 说明 | 适用 |
 |-------|------|------|
 | [edu-course-outline-generator](skills/edu-course-outline-generator/) | 职业教育课程大纲生成器：输入主题/人群/考试要求 → 模块化大纲+课时规划+配套练习 | 职教机构、教师、培训机构 |
+| [skill-discovery-ops](skills/skill-discovery-ops/) | AI 智能体技能发现与实装运维：检索/评估/冲突排除/镜像安装/双保险同步/经验沉淀 | Codex 用户、Agent 开发者、AI 运营者 |
+
+## 文章与经验
+
+- [AI 智能体技能发现与实装实战（2026-08-12）](docs/ai-skill-discovery-practice_20260812.md)——一次完整闭环：技能检索→六维评估→冲突排除→实装→验证→沉淀；含平台×技能缺口表与 6 个真实踩坑解法（含命令）
 
 ## 路线图（计划中）
 

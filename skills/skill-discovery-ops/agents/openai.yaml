@@ -1,0 +1,4 @@
+interface:
+  display_name: "技能发现与实装运维"
+  short_description: "按需发现、评估并实装 AI 智能体技能：find-skills 检索、质量三查、冲突排除、镜像安装、双保险同步"
+  default_prompt: "帮我查找并评估一个技能是否值得安装"
