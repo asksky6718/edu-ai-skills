@@ -9,6 +9,9 @@
 | Skill | 说明 | 适用 |
 |-------|------|------|
 | [zhicheng-pm](skills/zhicheng-pm/) | **职称评审助手** —— 把「职称申报」从资格判定一路跟到拿证；先打穿一个人，再汇总一批人的进度 | 职教机构、职称申报服务、企业 HR |
+| [vocational-training-school-setup](skills/vocational-training-school-setup/) | **培训机构成立全流程** —— 把「办一所职业技能培训学校、并拿下职业技能等级认定资质」从立项跟到年检；口径逐条回官方原文核 | 职教机构、办学筹备团队、项目推进负责人 |
+
+---
 
 ## zhicheng-pm 详解
 
@@ -40,15 +43,53 @@
 
 装法与用法详见 [skills/zhicheng-pm/README.md](skills/zhicheng-pm/README.md)，版本变更见 [CHANGELOG.md](skills/zhicheng-pm/CHANGELOG.md)。
 
+---
+
+## vocational-training-school-setup 详解
+
+**一句话**：办培训学校的坑不在填表，在**资质是有先后顺序的**——先有培训资质才能招生，先有法人登记才能开课，「能办学」不等于「能发证」。这个技能把它拆成 **5 条能力**，能用机器核的先核完，缺的地方直接给你「插在第几步、谁负责、凭什么」。
+
+**五条能力**
+
+```
+口径与路线   锁属地口径（审批机关·依据文号·材料来源）＋定资质路线
+   ↓
+推进表核对   跑脚本机械核对：资质链·日期·状态·空值·顺序倒置
+   ↓
+交付物清单   逐项打勾＋标证据位置＋常见退回原因
+   ↓
+运行合规     年检·培训台账·培训协议·收费公示·变更与终止
+   ↓
+评价资质     社评组织遴选备案（须点名）
+```
+
+**两条铁律**：
+
+1. **以属地当期公开文件为准** —— 培训类审批按区/县级人社部门执行，同一省内不同县市的面积门槛、资金门槛、办结时限都可能不同。技能里收录的湖北、上海两份口径**只作对照与提问用**。
+2. **两种资质别混为一谈** —— **办学许可**（能面向社会办培训）≠ **社评组织备案**（能面向社会做职业技能等级认定、发职业技能等级证书）。
+
+**机器全包**：属地口径检索与对照 · 推进表机械核对 · 交付物逐项打勾 · 缺口与催补清单 · 年检与台账排期 · 申报包结构配方。
+
+**必须人到场**：取属地当期原件 · 场所与消防核实 · 验资与固定资产证明 · 教师劳动合同 · 单位盖章 · 提交申报 · 与审批机关对口径。
+
+**配套参考件**：湖北 / 上海两份官方口径 · 九段全流程细目（条件·材料·时限·坑） · 交付物检查表与 12 类常见缺口 · **职业（工种）申报包配方**（六大类、逐份要点、通用"门槛表"） · **脱敏案例**（一套实际报送的申报材料实录，49 份文件怎么组织）。
+
+装法与用法详见 [skills/vocational-training-school-setup/README.md](skills/vocational-training-school-setup/README.md)，版本变更见 [CHANGELOG.md](skills/vocational-training-school-setup/CHANGELOG.md)。
+
+---
+
 ## 安装
 
 ```bash
 # 把技能目录复制到你的技能目录
-cp -r skills/zhicheng-pm ~/.workbuddy/skills/    # WorkBuddy
-cp -r skills/zhicheng-pm ~/.codex/skills/        # Codex 系
+cp -r skills/zhicheng-pm ~/.workbuddy/skills/                        # WorkBuddy
+cp -r skills/vocational-training-school-setup ~/.workbuddy/skills/    # WorkBuddy
+
+cp -r skills/zhicheng-pm ~/.codex/skills/                            # Codex 系
+cp -r skills/vocational-training-school-setup ~/.codex/skills/        # Codex 系
 ```
 
-装好后，对话里说「职称评审」「我要报职称，从哪开始」「帮某某从头走一遍」即可唤起。
+装好后，对话里说「职称评审」「我要报职称，从哪开始」即可唤起第一个技能；说「我要办个培训学校」「检查我的项目推进表」「缺什么材料」即可唤起第二个技能。
 
 ## 在线体验
 
@@ -61,18 +102,20 @@ cp -r skills/zhicheng-pm ~/.codex/skills/        # Codex 系
 ```
 skills/
   <skill-name>/
-    SKILL.md          # 技能入口（frontmatter：name / description / 触发词）
-    README.md         # 装法与用法
-    CHANGELOG.md      # 版本留痕
+    SKILL.md              # 技能入口（根路由：能力总览 · 路由判定表 · 通则 · 执行前核对）
+    README.md             # 装法与用法
+    CHANGELOG.md          # 版本留痕
     LICENSE / VERSION
-    references/       # 执行主线 · 人工把关点 · 台账字段
-    skills/           # 子技能（按环节拆分）
+    agents/               # 输入输出与交接声明（可选）
+    skills/               # 子技能（按环节拆分，统一六段封面）
+    references/           # 口径 · 清单 · 配方 · 案例
+    scripts/              # 可执行件（确定性检查，不联网不装包）
+    reports/              # 证据与测试记录（内部件不入库）
 ```
 
 ## 路线图（计划中）
 
 - 人工智能训练师培训 —— 招生 → 报考资格 → 开班 → 课时 → 题库练习 → 考试 → 成绩 → 申报认定 → 发证
-- 人工智能应用认证 —— 按批次与考生名单推进
 - 成人学历提升、大模型培训产品线
 
 ## 仓库文档
@@ -81,10 +124,10 @@ skills/
 
 ## 维护
 
-- 每个技能包遵循 Agent Skill 规范（frontmatter：`name` / `description`）
+- 每个技能包遵循 Agent Skill 规范（frontmatter：`name` / `description`），根文件只做路由，业务正文下沉到子技能与 `references/`
 - 版本口径：方法或流程有变 → 升版本；只补发布要件 → 同样升版本；每次动 `CHANGELOG.md` 与 `VERSION`
-- 发布前过合规与脱敏检查：**不含真人姓名、身份证、手机号、单位名**
-- 政策类数据一律回官方原文核，**不套模板、不照抄旧数据**
+- 发布前过合规与脱敏检查：**不含主体名、客户名、项目名、地名绑定、人名、身份证、手机号、单位名、本机绝对路径**
+- 政策类数据一律回官方原文核，**不套模板、不照抄旧数据**；跨地区数字只作提问清单
 
 ## License
 
