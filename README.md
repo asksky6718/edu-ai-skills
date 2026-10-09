@@ -44,6 +44,11 @@
 |-------|------|------|
 | [zhicheng-pm](skills/zhicheng-pm/) | **职称评审助手** —— 把「职称申报」从资格判定一路跟到拿证；先打穿一个人，再汇总一批人的进度 | 职教机构、职称申报服务、企业 HR |
 | [vocational-training-school-setup](skills/vocational-training-school-setup/) | **培训机构资质 · 手把手办证** —— 从零新办一家培训机构（八门）／已有机构新设职业（工种）（五门），一门一门带你过；先判人社还是校外培训两条通道，口径逐条回官方原文核 | 职教机构、办学筹备团队、项目推进负责人 |
+| [opc-market](skills/opc-market/) | **市场部 · 获客引擎** —— 智能体＋自媒体获客：内容流水线量产选题与初稿、盯梢互动，触点收敛成带级别标签的招生线索，5 道门机判后才放行 | 职教机构市场/招生岗 |
+| [opc-sales](skills/opc-sales/) | **销售部 · 订单引擎** —— 线索＋课程转成带审批留痕的订单；只核资质与审批，不定价不承诺 | 销售/商务岗 |
+| [opc-product](skills/opc-product/) | **产品部 · 课程生产** —— 知识点碎片化、大纲逐条有出处、考试类必绑题库；大纲必须经人确认才进下游 | 教研/课程生产岗 |
+| [opc-service](skills/opc-service/) | **服务部 · 交付引擎** —— 订单＋课程落成可验收的交付：课堂有声非空壳，交付即产生级别判据证据 | 教务/交付岗 |
+| [opc-aftersales](skills/opc-aftersales/) | **售后部 · 对账结算**（仅内部运维用）—— 交付＋计量＋审计对账出结算与晋级信号；涉钱涉对外只挂起 | 经营复盘/财务对账岗 |
 
 ## 收录标准
 
@@ -147,18 +152,49 @@
 
 ---
 
+## OPC 五部门经营工具包 详解
+
+**一句话**：把一家教育类培训机构的**五个部门**各锻造成一个技能包，部门之间用机器可核的交接件串成一条流水线——每道交接过「门」校验，能机器干的全交给机器，涉钱、涉对外、涉实名的一律挂起等人。
+
+```
+鱼塘模型（招生 → 成交 → 生产 → 交付 → 复购）
+  opc-market      获客：智能体量产内容、触点收敛成线索 lead.json（L1–L9 级别标签）
+     ↓
+  opc-sales       成交：lead + course → 订单 order.json（审批留痕三件，缺一即拒）
+     ↓
+  opc-product     生产：按目标级别产课程 course.json（大纲有出处、考试绑题库）
+     ↓
+  opc-service     交付：order + course → 交付记录 delivery.json（课堂有声非空壳）
+     ↓
+  opc-aftersales  复购：delivery + 计量 + 审计 → renewal.json
+                  复购信号 next_level_course ──回流 opc-market（鱼再入塘）
+```
+
+**五个部门的共同纪律**：
+
+1. **交接件即合同**——上游产物字段不齐直接拒收，绝不「先收下再补」；
+2. **门内机判、门外人判**——能用脚本核的（齐备性／格式／留痕）一律脚本；价格、承诺、付款、盖章、实名账号一律人做；
+3. **级别共用一把尺子**——招生分级（L1–L9）与学员能力分级同标尺，获客、排课、交付、晋级四处口径不打架；
+4. **复购闭环**——售后判定的晋级信号自动回流市场部，形成「打鱼再放苗」。
+
+装法与用法详见各包 [skills/opc-market/README.md](skills/opc-market/)（其余四包同目录），版本变更见各包 CHANGELOG.md。
+
+---
+
 ## 安装
 
 ```bash
-# 把技能目录复制到你的技能目录
+# 把技能目录复制到你的技能目录（ opc 五包同理：cp -r skills/<技能名> <技能目录>/ ）
 cp -r skills/zhicheng-pm ~/.workbuddy/skills/                        # WorkBuddy
 cp -r skills/vocational-training-school-setup ~/.workbuddy/skills/    # WorkBuddy
+cp -r skills/opc-market ~/.workbuddy/skills/                          # WorkBuddy
 
 cp -r skills/zhicheng-pm ~/.codex/skills/                            # Codex 系
 cp -r skills/vocational-training-school-setup ~/.codex/skills/        # Codex 系
+cp -r skills/opc-market ~/.codex/skills/                              # Codex 系
 ```
 
-装好后，对话里说「职称评审」「我要报职称，从哪开始」即可唤起第一个技能；说「我要办个培训学校」「检查我的项目推进表」「缺什么材料」即可唤起第二个技能。
+装好后，对话里说「职称评审」「我要报职称，从哪开始」即可唤起第一个技能；说「我要办个培训学校」「检查我的项目推进表」「缺什么材料」即可唤起第二个技能；说「市场部」「招生获客」「下周发什么内容」即可唤起 OPC 市场部技能（其余四部门同理，说部门名即可）。
 
 ## 在线体验
 
