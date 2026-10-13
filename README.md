@@ -49,6 +49,8 @@
 | [opc-product](skills/opc-product/) | **产品部 · 课程生产** —— 知识点碎片化、大纲逐条有出处、考试类必绑题库；大纲必须经人确认才进下游 | 教研/课程生产岗 |
 | [opc-service](skills/opc-service/) | **服务部 · 交付引擎** —— 订单＋课程落成可验收的交付：课堂有声非空壳，交付即产生级别判据证据 | 教务/交付岗 |
 | [opc-aftersales](skills/opc-aftersales/) | **售后部 · 对账结算**（仅内部运维用）—— 交付＋计量＋审计对账出结算与晋级信号；涉钱涉对外只挂起 | 经营复盘/财务对账岗 |
+| [aito-self-media-distribution](skills/aito-self-media-distribution/) | **自媒体分发 · AiToEarn** —— 插件就绪 → 账号绑定 → 发布四步流 → 排障：含 `data-testid` 选择器真相、单账号纪律、「定时发布不生效」「草稿仅本地」两条限制 | 自媒体运营/内容分发岗（自部署 AiToEarn 实例） |
+| [eduopenai-core-ops](skills/eduopenai-core-ops/) | **EduOpenAI Core 操作**（仅内部运维用）—— 后台登录 → 生成课件 → 发布对接（OSS／网校课时）→ 供应商配置；含端点实测与四类排障清单 | 平台运维/教研生产岗 |
 
 ## 收录标准
 
@@ -181,6 +183,34 @@
 
 ---
 
+## 平台操作类技能 详解（内部运维用）
+
+**一句话**：把「每天都要动的那几个控制台」写成可照做的动作链——**每个坑都留了实测证据**，参数化到不含任何口令/密钥，使用者只填自己的地址与账号。
+
+### aito-self-media-distribution · 自媒体分发
+
+**一句话**：AiToEarn 的分发链路有个反直觉点——**控制台页面本身不发发布请求，真正干活的是浏览器扩展**。所以踩坑集中在两块：插件没就绪、选择器用错。
+
+**四个环节**：`插件就绪`（CRX 解包 → 加载 → 域允许 → cookies → 就绪判据）→ `账号绑定`（只读接口核 `status`）→ `发布作品`（四步流 ＋ `data-testid` 选择器真相）→ `排障核对`（现象→处置 ＋ 未授权响应判据）。
+
+**两条实测限制**（本技能直接写明绕法）：**定时发布不生效**（确认后仍按立即发布执行）；**草稿只存浏览器本地**（不落服务端、换机即失）。
+
+**三条硬纪律**：一次只选一个账号（多选会让「发布」静默无响应）· 对外可见内容先经负责人过目 · 凭据只进凭据保险库。
+
+### eduopenai-core-ops · EduOpenAI Core 操作
+
+**一句话**：Core 是「生成端出课件 ＋ 管理后台做发布与配置」两段式平台；四类日常操作各有一个明确的"做完了"判据。
+
+**五个环节**：`后台登录`（以**管理口令**为准，页面上另有的「管理员账号」栏可留空）→ `生成课件`（三段式输入 ＋ 碎片化生成机制）→ `发布对接`（发布到 OSS 静态播放 ／ 同步为网校课时 ／ iframe 嵌入）→ `供应商与模型`（六类能力供应商标；配置必过「连接测试 → 保存 → 刷新回看」三步）→ `排障`（登录/生成/发布/配置四类共 11 条现象→处置）。
+
+**端点实测**（2026-10-13 复核）：`/` 200 · `/admin` 401（未登录）· `/admin-login` 200 · `POST /api/edu/v1/admin/login` 错误口令 401 `INVALID_CREDENTIALS`。
+
+**边界**：**不含任何口令与 API Key** —— 口令走凭据保险库、Key 由使用者本人在后台写入；本技能不做内容合规背书，也不代做用户审核决策。
+
+装法与用法详见 [skills/aito-self-media-distribution/README.md](skills/aito-self-media-distribution/) 与 [skills/eduopenai-core-ops/README.md](skills/eduopenai-core-ops/)。
+
+---
+
 ## 安装
 
 ```bash
@@ -188,13 +218,17 @@
 cp -r skills/zhicheng-pm ~/.workbuddy/skills/                        # WorkBuddy
 cp -r skills/vocational-training-school-setup ~/.workbuddy/skills/    # WorkBuddy
 cp -r skills/opc-market ~/.workbuddy/skills/                          # WorkBuddy
+cp -r skills/aito-self-media-distribution ~/.workbuddy/skills/        # WorkBuddy
+cp -r skills/eduopenai-core-ops ~/.workbuddy/skills/                  # WorkBuddy
 
 cp -r skills/zhicheng-pm ~/.codex/skills/                            # Codex 系
 cp -r skills/vocational-training-school-setup ~/.codex/skills/        # Codex 系
 cp -r skills/opc-market ~/.codex/skills/                              # Codex 系
+cp -r skills/aito-self-media-distribution ~/.codex/skills/            # Codex 系
+cp -r skills/eduopenai-core-ops ~/.codex/skills/                      # Codex 系
 ```
 
-装好后，对话里说「职称评审」「我要报职称，从哪开始」即可唤起第一个技能；说「我要办个培训学校」「检查我的项目推进表」「缺什么材料」即可唤起第二个技能；说「市场部」「招生获客」「下周发什么内容」即可唤起 OPC 市场部技能（其余四部门同理，说部门名即可）。
+装好后，对话里说「职称评审」「我要报职称，从哪开始」即可唤起第一个技能；说「我要办个培训学校」「检查我的项目推进表」「缺什么材料」即可唤起第二个技能；说「市场部」「招生获客」「下周发什么内容」即可唤起 OPC 市场部技能（其余四部门同理，说部门名即可）；说「自媒体分发」「发布没反应」「插件未就绪」即可唤起自媒体分发技能；说「登录 Core 后台」「生成课件」「配视频生成」即可唤起 Core 操作技能。
 
 ## 在线体验
 
